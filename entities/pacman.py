@@ -1,5 +1,5 @@
 from colors import YELLOW
-from entity import *
+from .entity import *
 from directions import *
 import game
 

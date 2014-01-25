@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-from pacman import *
+from entities.pacman import *
 from colors import *
 
 FPS = 30
@@ -17,7 +17,7 @@ class Game():
         self.border_rect=pygame.Rect(50,50,600,600)
         pygame.display.set_caption("Pacman")
 
-        self.pacman=Pacman((100,100))
+        self.pacman=Pacman((self.surface.get_width()/2,self.surface.get_height()/2))
         self.entity_list.append(self.pacman)
         return True;
 
