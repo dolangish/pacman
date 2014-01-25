@@ -1,9 +1,10 @@
 import pygame
 
-class Entity(object):
+class Sprite(pygame.sprite.Sprite):
     def __init__(self,pos,size,color):
+        pygame.sprite.Sprite.__init__(self)
+        self.rect = pygame.Rect(pos,size)
         self.color=color
-        self.rect=pygame.Rect(pos[0],pos[1],size[0],size[1])
 
     def set_x(self,x):
         if self.rect.x != x:
@@ -25,7 +26,7 @@ class Entity(object):
     def get_height(self):
         return self.rect.height
     
-    def update(self):
+    def update(self,surface):
         pass      
 
     def draw(self, surface):
