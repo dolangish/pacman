@@ -12,6 +12,7 @@ class Game():
     def __init__(self, surface):
         self.surface=surface
         self.alive_group=pygame.sprite.Group()
+        self.wall_group=pygame.sprite.Group()
 
     def initialize(self):
         self.clock = pygame.time.Clock()
@@ -23,11 +24,19 @@ class Game():
 
         wall=Wall([200,200],[100,100])
         self.alive_group.add(wall)
+        self.wall_group.add(wall)
         return True;
 
     def update(self):
+        #update each object's movement
         for sprite in self.alive_group:
             sprite.update(self.surface)
+        #collision detection
+        check_collide(self.pacman,self.wall_group)
+
+    def check_collide(self,sprite,group)
+        if(pygame.sprite.spritecollide(sprite,group,False)
+           collision_list.append(WallCollision())
 
     def draw(self):
         self.surface.fill(BG_COL)

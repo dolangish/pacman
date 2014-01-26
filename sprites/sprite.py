@@ -27,7 +27,7 @@ class Sprite(pygame.sprite.Sprite):
         return self.rect.height
     
     def update(self,surface):
-        pass      
+          pass   
 
     def draw(self, surface):
         pygame.draw.rect(surface,self.color,self.rect)
