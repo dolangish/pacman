@@ -3,6 +3,7 @@ from pygame.locals import *
 from sprites.pacman import *
 from sprites.wall import *
 from colors import *
+from collision.wall_collision import *
 
 FPS = 30
 
@@ -12,6 +13,7 @@ class Game():
     def __init__(self, surface):
         self.surface=surface
         self.alive_group=pygame.sprite.Group()
+        self.wall_group=pygame.sprite.Group()
 
     def initialize(self):
         self.clock = pygame.time.Clock()
@@ -23,12 +25,24 @@ class Game():
 
         wall=Wall([200,200],[100,100])
         self.alive_group.add(wall)
+        self.wall_group.add(wall)
         return True;
 
     def update(self):
+        #update each object's movement
         for sprite in self.alive_group:
             sprite.update(self.surface)
-
+			
+        #collision detection
+        collision_list=self.pacman.check_collisions(self.surface,self.wall_group)
+        
+        #resolve
+        self.resolve_collisions(collision_list)
+           
+    def resolve_collisions(self,collision_list):
+        for collision in collision_list:
+            collision.resolve()
+		   
     def draw(self):
         self.surface.fill(BG_COL)
         pygame.draw.rect(self.surface,BLUE,self.border_rect,3)
