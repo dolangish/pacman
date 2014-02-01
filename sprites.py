@@ -77,7 +77,7 @@ class Pacman(Sprite):
             self.move_right(1)
 
     def get_radius(self):
-        return math.floor(self.get_width()/2)
+        return int(math.floor(self.get_width()/2))
 
     def get_position(self):
         return (self.rect.midtop[0],self.rect.midleft[1])
