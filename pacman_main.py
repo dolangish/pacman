@@ -1,3 +1,6 @@
+################
+#the entry point
+################
 import pygame
 from pygame.locals import *
 from game import *
