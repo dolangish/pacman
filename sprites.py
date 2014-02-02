@@ -97,7 +97,12 @@ class Pacman(Sprite):
         return (self.rect.midtop[0],self.rect.midleft[1])
 
     def draw(self,surface):
-        pygame.draw.circle(surface,self.color,self.get_position(),self.get_radius(),0)
+        rect=self.rect.copy()
+        rect.width=rect.width-4
+        rect.x=rect.x+2
+        rect.height=rect.height-4
+        rect.y=rect.y+2
+        pygame.draw.ellipse(surface,self.color,rect)
 
 #WALL CLASS
 class Wall(Sprite):

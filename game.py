@@ -35,6 +35,7 @@ class Game():
             self.wall_group.add(wall)
         
         #init pacman        
+        pacman_size=self.map.get_cell_size()
         self.pacman=sprites.Pacman(self.surface,self.map.get_start_pos(),self.map.get_cell_size())
         self.alive_group.add(self.pacman)
         
