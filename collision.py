@@ -36,13 +36,13 @@ def resolve_collisions(collision_list):
             if isinstance(sprite2,sprites.Wall):
                 s1_dir=sprite1.get_direction()
                 if s1_dir==directions.UP:
-                    sprite1.move_down(1)
+                    sprite1.resolve_collision([0,-1],sprite2)
                 elif s1_dir==directions.DOWN:
-                    sprite1.move_up(1)
+                    sprite1.resolve_collision([0,1],sprite2)
                 elif s1_dir==directions.LEFT:
-                    sprite1.move_right(1)
+                    sprite1.resolve_collision([-1,0],sprite2)
                 elif s1_dir==directions.RIGHT:
-                    sprite1.move_left(1)
+                    sprite1.resolve_collision([1,0],sprite2)
             #against a boarder
             elif isinstance(sprite2,pygame.Surface):
                 if sprite1.dir == directions.LEFT:

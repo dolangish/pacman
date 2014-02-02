@@ -5,13 +5,13 @@ import pygame
 import colors
 import directions
 import math
-
-PIXELS_PER_UNIT=5
+import game
 
 #SPRITE BASECLASS
 class Sprite(pygame.sprite.Sprite):
-    def __init__(self,pos,size,color):
+    def __init__(self,surface,pos,size,color):
         pygame.sprite.Sprite.__init__(self)
+        self.surface=surface
         self.rect = pygame.Rect(pos,size)
         self.color=color
 
@@ -29,6 +29,13 @@ class Sprite(pygame.sprite.Sprite):
     def get_y(self):
         return self.rect.y
 
+    def move(self,vector):
+        self.set_x(self.get_x()+vector[0])
+        self.set_y(self.get_y()+vector[1])
+        
+    def get_rect(self):
+        return self.rect
+        
     def get_width(self):
         return self.rect.width
 
@@ -36,15 +43,22 @@ class Sprite(pygame.sprite.Sprite):
         return self.rect.height
     
     def update(self,surface):
-          pass   
+          pass  
 
+    def resolve_collision(self,vector,sprite):
+        resolve_vector=[-vector[0],-vector[1]]
+        while self.get_rect().colliderect(sprite.get_rect()):
+            self.move(resolve_vector)
+    
     def draw(self, surface):
         pygame.draw.rect(surface,self.color,self.rect)
 
 #PACMAN CLASS
 class Pacman(Sprite):
-    def __init__(self,pos):
-        Sprite.__init__(self,pos,[100,100],colors.YELLOW)
+    speed=0.2
+    
+    def __init__(self,surface,pos,size):
+        Sprite.__init__(self,surface,pos,size,colors.YELLOW)
         self.dir=directions.LEFT;
 
     def set_direction(self,new_direction):
@@ -54,16 +68,16 @@ class Pacman(Sprite):
         return self.dir
         
     def move_up(self,unit):
-        self.set_y(self.get_y()-(PIXELS_PER_UNIT*unit))
+        self.set_y(self.get_y()-(game.get_pixels_per_unit(self.surface)*unit*self.speed))
 	
     def move_down(self,unit):
-        self.set_y(self.get_y()+(PIXELS_PER_UNIT*unit))
+        self.set_y(self.get_y()+(game.get_pixels_per_unit(self.surface)*unit*self.speed))
 		
     def move_right(self,unit):
-        self.set_x(self.get_x()+(PIXELS_PER_UNIT*unit))
+        self.set_x(self.get_x()+(game.get_pixels_per_unit(self.surface)*unit*self.speed))
 		
     def move_left(self,unit):
-        self.set_x(self.get_x()-(PIXELS_PER_UNIT*unit))
+        self.set_x(self.get_x()-(game.get_pixels_per_unit(self.surface)*unit*self.speed))
 	
             
     def update(self,surface):
@@ -87,5 +101,5 @@ class Pacman(Sprite):
 
 #WALL CLASS
 class Wall(Sprite):
-    def __init__(self,pos,size):
-        Sprite.__init__(self,pos,size,colors.BLUE)
+    def __init__(self,surface,pos,size,color):
+        Sprite.__init__(self,surface,pos,size,color)

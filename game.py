@@ -7,28 +7,39 @@ import sprites
 import collision
 import colors
 import directions
+import math
+import map
 
 FPS = 30
 
+def get_pixels_per_unit(surface):
+    return math.floor(surface.get_height()/30);
+
 class Game():
+    
     def __init__(self, surface):
         self.surface=surface
         self.alive_group=pygame.sprite.Group()
         self.wall_group=pygame.sprite.Group()
-
+        
     def initialize(self):
         self.clock = pygame.time.Clock()
-        self.border_rect=pygame.Rect(50,50,600,600)
         pygame.display.set_caption("Pacman")
 
-        self.pacman=sprites.Pacman([self.surface.get_width()/2,self.surface.get_height()/2])
+        #init the map
+        self.map=map.Map(self.surface,[19,21])
+        data=self.map.get_map_data()
+        walls=self.map.set_walls(data,colors.BLUE)
+        for wall in walls:
+            self.alive_group.add(wall)
+            self.wall_group.add(wall)
+        
+        #init pacman        
+        self.pacman=sprites.Pacman(self.surface,self.map.get_start_pos(),self.map.get_cell_size())
         self.alive_group.add(self.pacman)
-
-        wall=sprites.Wall([200,200],[100,100])
-        self.alive_group.add(wall)
-        self.wall_group.add(wall)
+        
         return True;
-
+    
     def update(self):
         #update each object's movement
         for sprite in self.alive_group:
@@ -43,7 +54,6 @@ class Game():
            		   
     def draw(self):
         self.surface.fill(colors.BG_COL)
-        pygame.draw.rect(self.surface,colors.BLUE,self.border_rect,3)
 
         for sprite in self.alive_group.sprites():
             sprite.draw(self.surface)

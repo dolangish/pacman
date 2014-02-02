@@ -7,7 +7,7 @@ from game import *
 
 def main():
    pygame.init()
-   surface = pygame.display.set_mode((700, 700))
+   surface = pygame.display.set_mode((684, 672))
    game=Game(surface);
    if game and game.initialize():
        game.run();
